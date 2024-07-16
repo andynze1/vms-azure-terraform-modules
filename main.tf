@@ -17,6 +17,7 @@ module "prod_networking_module" {
   }
 }
 
+
 # resource "tls_private_key" "ubuntu-keypair" {
 #   algorithm = "RSA"
 #   rsa_bits  = 4096
@@ -37,11 +38,12 @@ module "prod_networking_module" {
 
 module "jenkins_vm_module" {
   source               = "./modules/virtual_machine"
-  vms              = "jenkins-server"
+  vms                  = "jenkins-server"
   resource_group_name  = module.prod_networking_module.resource_group_name
   location             = module.prod_networking_module.resource_group_location
   vm_size              = "Standard_D2s_v3"
   admin_username       = "adminuser"
+  vms_key              = "ubuntu-keypair.pem"
   network_interface_id = module.prod_networking_module.network_interface_id
   network_dependencies = [
     module.prod_networking_module.resource_group_name,
@@ -52,7 +54,6 @@ module "jenkins_vm_module" {
     environment = "production"
   }
 }
-
 
 
 # module "stage_networking_module" {

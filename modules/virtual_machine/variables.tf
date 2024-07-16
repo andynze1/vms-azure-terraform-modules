@@ -53,3 +53,7 @@ variable "network_interface_id" {
   type        = string
 }
 
+variable "vms_key" {
+  description = "The username keypair for the virtual machine."
+  type        = string
+}

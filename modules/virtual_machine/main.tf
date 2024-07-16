@@ -6,10 +6,10 @@ resource "azurerm_linux_virtual_machine" "automation-server" {
   location            = var.location
   size                = var.vm_size
   admin_username      = var.admin_username
-
+  
   admin_ssh_key {
     username   = var.admin_username
-    public_key = tls_private_key.ubuntu-keypair.public_key_openssh
+    public_key = tls_private_key.linux-keypair.public_key_openssh
   }
 
   network_interface_ids = [var.network_interface_id]
@@ -32,15 +32,15 @@ resource "azurerm_linux_virtual_machine" "automation-server" {
   tags = var.tags
 }
 
-resource "tls_private_key" "ubuntu-keypair" {
+resource "tls_private_key" "linux-keypair" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
-resource "local_file" "ubuntu-pem-key" {
-  content         = tls_private_key.ubuntu-keypair.private_key_pem
-  filename        = "ubuntu-keypair.pem"
+resource "local_file" "linux-pem-key" {
+  content         = tls_private_key.linux-keypair.private_key_pem
+  filename        = var.vms_key
   file_permission = "0400"
-  depends_on      = [tls_private_key.ubuntu-keypair]
+  depends_on      = [tls_private_key.linux-keypair]
 }
 ################################
