@@ -100,7 +100,7 @@ resource "azurerm_network_interface_security_group_association" "network_sg_asso
   network_security_group_id = azurerm_network_security_group.security_group.id
 
   depends_on = [
-    azurerm_network_interface.network_interface,
+ #   azurerm_network_interface.network_interface,
     azurerm_network_security_group.security_group
   ]
 }
